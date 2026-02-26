@@ -1,0 +1,9 @@
+# Ignorar arquivos de dados e resultados financeiros
+dados/
+*.pdf
+*.xlsx
+*.csv
+
+# Ignorar pastas de ambiente virtual do Python
+.venv/
+__pycache__/

@@ -1,0 +1,187 @@
+import os
+
+print("--- GERANDO GUIA DE CFOP PARA IMPRESSÃO ---")
+
+# O código HTML com o design e a tabela formatada
+html_conteudo = """
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Guia Rápido de CFOP - Lenox</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 2px solid #2C3E50;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #2C3E50;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            color: #2C3E50;
+            margin: 0;
+            font-size: 24px;
+            text-transform: uppercase;
+        }
+        .header p {
+            margin: 5px 0 0 0;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        h2 {
+            color: #2980B9;
+            font-size: 16px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            border-left: 4px solid #2980B9;
+            padding-left: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+        th, td {
+            border: 1px solid #bdc3c7;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #ecf0f1;
+            color: #2C3E50;
+            font-weight: bold;
+            width: 33%;
+        }
+        .destaque-st {
+            background-color: #f1c40f;
+            font-weight: bold;
+            color: #000;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 11px;
+            text-align: center;
+            color: #7f8c8d;
+            border-top: 1px solid #ecf0f1;
+            padding-top: 10px;
+        }
+        /* Configuração para a impressão ficar perfeita na folha A4 */
+        @media print {
+            body { padding: 0; }
+            .container { border: none; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Guia Rápido de CFOP - Compras</h1>
+        <p>Sistema Omie | Analista: Tiago Motta</p>
+    </div>
+
+    <h2>1. MATÉRIA-PRIMA DIRETA (Aço, Chapas, Componentes)</h2>
+    <table>
+        <tr>
+            <th>NF do Fornecedor (Saída)</th>
+            <th>Lançamento Omie (Entrada)</th>
+            <th>Aplicação Prática</th>
+        </tr>
+        <tr>
+            <td>5.101, 5.102<br>6.101, 6.102</td>
+            <td><strong>1.101</strong> (Dentro RJ)<br><strong>2.101</strong> (Fora RJ)</td>
+            <td>Compra Normal. Gera crédito cheio de ICMS e IPI.</td>
+        </tr>
+        <tr>
+            <td>5.401, 5.403, 5.405<br>6.401, 6.404</td>
+            <td class="destaque-st">1.401 (Dentro RJ)<br>2.401 (Fora RJ)</td>
+            <td><strong>CUIDADO (ST):</strong> ICMS já pago na origem. Impede cálculo indevido de crédito.</td>
+        </tr>
+    </table>
+
+    <h2>2. INSUMOS E USO/CONSUMO (Discos, Ferramentas, Limpeza)</h2>
+    <table>
+        <tr>
+            <th>NF do Fornecedor (Saída)</th>
+            <th>Lançamento Omie (Entrada)</th>
+            <th>Aplicação Prática</th>
+        </tr>
+        <tr>
+            <td>5.102<br>6.102</td>
+            <td><strong>1.556</strong> (Dentro RJ)<br><strong>2.556</strong> (Fora RJ)</td>
+            <td>Uso e Consumo. Sem crédito de ICMS. Se desgastar na produção, abater PIS/COFINS.</td>
+        </tr>
+        <tr>
+            <td>5.405<br>6.404</td>
+            <td class="destaque-st">1.407 (Dentro RJ)<br>2.407 (Fora RJ)</td>
+            <td><strong>CUIDADO (ST):</strong> Uso/Consumo com Substituição Tributária. Lançamento neutro.</td>
+        </tr>
+    </table>
+
+    <h2>3. SERVIÇOS LOGÍSTICOS E TERCEIRIZAÇÃO</h2>
+    <table>
+        <tr>
+            <th>NF do Fornecedor (Saída)</th>
+            <th>Lançamento Omie (Entrada)</th>
+            <th>Aplicação Prática</th>
+        </tr>
+        <tr>
+            <td>5.352<br>6.352 (CT-e)</td>
+            <td><strong>1.352</strong> (Dentro RJ)<br><strong>2.352</strong> (Fora RJ)</td>
+            <td>Frete. Se o frete foi para trazer matéria-prima, também dá crédito!</td>
+        </tr>
+        <tr>
+            <td>5.124<br>6.124</td>
+            <td><strong>1.124</strong> (Dentro RJ)<br><strong>2.124</strong> (Fora RJ)</td>
+            <td>Industrialização por Terceiros (ex: serviço de corte/dobra).</td>
+        </tr>
+    </table>
+
+    <h2>4. ATIVO IMOBILIZADO (Máquinas, Computadores)</h2>
+    <table>
+        <tr>
+            <th>NF do Fornecedor (Saída)</th>
+            <th>Lançamento Omie (Entrada)</th>
+            <th>Aplicação Prática</th>
+        </tr>
+        <tr>
+            <td>5.102, 5.405, 5.551<br>6.xxx</td>
+            <td><strong>1.551</strong> (Dentro RJ)<br><strong>2.551</strong> (Fora RJ)</td>
+            <td>Gera crédito de ICMS parcelado em 48 meses (Controle CIAP).</td>
+        </tr>
+    </table>
+
+    <div class="footer">
+        Documento de Controle Interno - Lenox Cozinhas Industriais | Atualizado para 2026
+    </div>
+</div>
+
+</body>
+</html>
+"""
+
+# Cria e salva o arquivo HTML na mesma pasta do seu projeto
+caminho_arquivo = os.path.join(os.getcwd(), 'Guia_CFOP_Lenox.html')
+
+with open(caminho_arquivo, 'w', encoding='utf-8') as f:
+    f.write(html_conteudo)
+
+print(f"✅ SUCESSO! O arquivo foi criado em:\n{caminho_arquivo}")
+print("\n--- COMO TRANSFORMAR EM PDF AGORA ---")
+print("1. Vá na sua pasta do PyCharm e dê dois cliques no arquivo 'Guia_CFOP_Lenox.html'.")
+print("2. Ele vai abrir no seu navegador de internet (Chrome, Edge, etc).")
+print("3. Aperte as teclas 'Ctrl + P' no teclado.")
+print("4. Mude a impressora para 'Salvar como PDF' e clique em Salvar!")
