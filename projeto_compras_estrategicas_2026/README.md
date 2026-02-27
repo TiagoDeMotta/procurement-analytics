@@ -36,3 +36,33 @@ Este projeto foi desenvolvido para transformar o setor de Compras de um centro d
 
 ---
 *Nota: Por motivos de compliance e segurança da informação, os arquivos contendo dados financeiros reais (PDFs e Excel) não constam neste repositório público.*
+## 📈 Resultados Visuais e Dashboards Executivos
+
+Abaixo estão os recortes dos painéis gerados via Python (Matplotlib/Pandas), cruzando a carga operacional do setor de compras com a eficiência tributária.
+
+### 1. Matriz Estratégica: Volume vs. Eficiência Fiscal
+*Identificação visual do quadrante de fornecedores "Estrelas" (Alto volume e Alto crédito) contra os "Alvos de Negociação" (Alto volume e Zero crédito, foco primário de redução de custos).*
+![Matriz de Eficiência Fiscal](img/matriz_estrategica.png)
+
+### 2. Projeção de Saving Semestral (Waterfall)
+*Impacto direto no fluxo de caixa da empresa após a renegociação de preços baseada no Custo Total de Aquisição (TCO), descontando perdas tributárias.*
+![Gráfico Waterfall](img/waterfall_saving.png)
+
+### 3. Curva A de Suprimentos (Top 10 Fornecedores)
+*Mapeamento do Spend Analysis detalhando onde o capital da empresa está concentrado.*
+![Top 10 Gastos](img/top10_gastos.png)
+
+### 4. Esforço Operacional vs. Gasto Real
+*Comparativo entre o volume de notas fiscais processadas (custo de tempo/homem) e o volume financeiro real das operações.*
+![Volume vs Operacional](img/volume_vs_operacional.png)
+
+---
+
+## 📞 Contato & Perfil
+Este projeto faz parte do meu portfólio prático de **Data Science aplicado a Negócios**. Se você busca um profissional capaz de extrair inteligência de dados brutos para gerar lucro e otimização de processos corporativos, vamos conversar!
+
+* **Analista:** Tiago Motta
+* **Localização:** Duque de Caxias, RJ
+* **E-mail:** tiago-moda-senac@hotmail.com
+* **LinkedIn:** https://www.linkedin.com/in/demotta/
+* 
